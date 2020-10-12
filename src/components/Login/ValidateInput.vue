@@ -13,11 +13,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType } from 'vue'
+import { defineComponent, reactive, PropType, onMounted } from 'vue'
+
+// 导入监听
+import { emitter } from '@/components/Login/ValidateForm.vue'
 
 // 验证邮箱的正则
 const emailReg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-const passwordReg = /^(?![\d]+$)(?![a-zA-Z]+$)(?![!#$%^&*]+$)[\da-zA-Z!#$%^&*]{6,20}$/
+// 至少8个字符，至少1个字母，1个数字和1个特殊字符：
+const passwordReg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
 
 interface RuleProp {
   type: 'required' | 'email' | 'password';
@@ -34,7 +38,6 @@ export default defineComponent({
   },
   inheritAttrs: false,
   setup (props, context) {
-    console.log(context.attrs)
     const inputRef = reactive({
       val: props.modelValue || '',
       error: false,
@@ -69,8 +72,14 @@ export default defineComponent({
           return passed
         })
         inputRef.error = !allpassed
+        return allpassed
       }
+      return true
     }
+    // 生命周期钩子
+    onMounted(() => {
+      emitter.emit('form-item-created', validateInput)
+    })
     return {
       inputRef,
       validateInput,

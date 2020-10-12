@@ -4,17 +4,33 @@
     <global-header :user="user"></global-header>
     <!--内容列表-->
 <!--    <column-list :list="list"></column-list>-->
-    <form>
+    <validate-form @form-submit="onsubmitForm">
       <div class="mb-3">
         <label class="form-label">邮箱地址</label>
-        <validate-input :rules="emailRules" v-model="emailRef" type="text" placeholder="请输入邮箱地址"></validate-input>
+        <validate-input
+          :rules="emailRules"
+          v-model="emailRef"
+          type="text"
+          placeholder="请输入邮箱地址"
+          ref="inputRef"
+        />
         {{ emailRef }}
       </div>
       <div class="mb-3">
         <label class="form-label">密码</label>
-        <validate-input type="password" :rules="passwordRules" placeholder="请输入密码"></validate-input>
+        <validate-input
+          type="password"
+          :rules="passwordRules"
+          placeholder="请输入密码"
+          v-model="passwordRef"
+        />
+        {{ passwordRef }}
       </div>
-    </form>
+      <!--提交  # 是 v-slot 的缩写-->
+      <template #submit>
+        <span class="btn btn-danger">Submit</span>
+      </template>
+    </validate-form>
   </div>
 </template>
 
@@ -27,7 +43,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 // 引入组件 和 接口
 import ColumnList, { ColumnProps } from '@/components/ColumnList/ColumnList.vue'
 import GlobalHeader, { UserProps } from '@/components/Header/GlobalHeader.vue'
-import ValidateInput, { RulesProp } from '@/components/confirmation/ValidateInput.vue'
+import ValidateInput, { RulesProp } from '@/components/Login/ValidateInput.vue'
+import ValidateForm from '@/components/Login/ValidateForm.vue'
 
 // 测试数据
 const testData: ColumnProps[] = [
@@ -68,25 +85,36 @@ export default defineComponent({
   components: {
     // ColumnList,
     GlobalHeader,
-    ValidateInput
+    ValidateInput,
+    ValidateForm
   },
   setup () {
-    const emailRef = ref('muchjoy')
+    const inputRef = ref<any>()
+    const emailRef = ref('292')
+    const passwordRef = ref('123456')
     const emailRules: RulesProp = [
       { type: 'required', message: '电子邮箱不能为空' },
       { type: 'email', message: '请输入正确的电子邮箱格式' }
     ]
     const passwordRules: RulesProp = [
       { type: 'required', message: '密码不能为空' },
-      { type: 'email', message: '请输入正确的密码格式' }
+      { type: 'password', message: '请输入正确的密码格式' }
     ]
+
+    // 通过 ref  可以访问到组件的实例方法
+    const onsubmitForm = (result: boolean) => {
+      console.log(result)
+    }
 
     return {
       list: testData,
       user: currentUser,
       emailRules,
       passwordRules,
-      emailRef
+      emailRef,
+      passwordRef,
+      onsubmitForm,
+      inputRef
     }
   }
 })

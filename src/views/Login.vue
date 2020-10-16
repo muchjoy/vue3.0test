@@ -35,8 +35,8 @@
 import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-import ValidateInput, { RulesProp } from '@/components/Login/ValidateInput.vue'
-import ValidateForm from '@/components/Login/ValidateForm.vue'
+import ValidateInput, { RulesProp } from '@/components/form/ValidateInput.vue'
+import ValidateForm from '@/components/form/ValidateForm.vue'
 
 export default defineComponent({
   name: 'Login',
@@ -46,10 +46,13 @@ export default defineComponent({
   },
   setup () {
     const inputRef = ref<any>()
+    // 邮箱双向绑定数据
     const emailRef = ref('')
+    // 密码双向绑定数据
     const passwordRef = ref('')
     // 跳转路由
     const router = useRouter()
+    // 验证的规则内容
     const emailRules: RulesProp = [
       { type: 'required', message: '电子邮箱不能为空' },
       { type: 'email', message: '请输入正确的电子邮箱格式' }

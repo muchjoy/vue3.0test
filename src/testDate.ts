@@ -35,6 +35,7 @@ export const testPosts: PostProps[] = [
     id: 1,
     title: '这是我的第一篇文章',
     content: 'this is a new post you Very often we will need to map',
+    image: 'http://vue-maker.oss-cn-hangzhou.aliyuncs.com/vue-marker/5ee22dd58b3c4520912b9470.jpg?x-oss-process=image/resize,m_pad,h_100,w_100',
     createdAt: '2020-06-11 10:34:22',
     columnId: 1
   },
@@ -43,6 +44,7 @@ export const testPosts: PostProps[] = [
     title: '这是我的第一篇文章',
     content: 'this is a new post you Very often we will need to map',
     createdAt: '2020-06-11 10:34:22',
+    image: 'http://vue-maker.oss-cn-hangzhou.aliyuncs.com/vue-marker/5ee22dd58b3c4520912b9470.jpg?x-oss-process=image/resize,m_pad,h_100,w_100',
     columnId: 2
   },
   {
@@ -50,6 +52,7 @@ export const testPosts: PostProps[] = [
     title: '这是我的第一篇文章',
     content: 'this is a new post you Very often we will need to map',
     createdAt: '2020-06-11 10:34:22',
+    image: 'http://vue-maker.oss-cn-hangzhou.aliyuncs.com/vue-marker/5ee22dd58b3c4520912b9470.jpg?x-oss-process=image/resize,m_pad,h_100,w_100',
     columnId: 3
   }
 ]

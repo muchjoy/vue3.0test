@@ -1,7 +1,7 @@
 <template>
   <div class="post-list">
-    <article class="card mb-3 shadow-sm">
-      <div class="card-body" v-for="item in list" :key="item.id">
+    <article class="card mb-3 shadow-sm" v-for="item in list" :key="item.id">
+      <div class="card-body">
         <h4>{{ item.title }}</h4>
         <div class="row my-3 align-items-center">
           <div class="col-3">

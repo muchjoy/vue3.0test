@@ -9,6 +9,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
+import { useStore } from 'vuex'
+
 import useClickOutside from '@/hooks/useClickOutside'
 
 export default defineComponent({
@@ -20,6 +22,7 @@ export default defineComponent({
     }
   },
   setup () {
+    const store = useStore()
     const isOpen = ref(false)
     const toggle = () => {
       isOpen.value = !isOpen.value
@@ -34,6 +37,7 @@ export default defineComponent({
     watch(isClickOutside, () => {
       if (isOpen.value && isClickOutside.value) {
         isOpen.value = false
+        store.commit('login')
       }
     })
     return {

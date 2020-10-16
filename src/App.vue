@@ -18,18 +18,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-
+import { defineComponent, computed } from 'vue'
+import { useStore } from 'vuex'
 // 引入 bootstrap css 文件
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 // 引入组件 和 接口
 import GlobalHeader, { UserProps } from '@/components/Header/GlobalHeader.vue'
-
-const currentUser: UserProps = {
-  isLogin: true,
-  name: 'Muchjoy'
-}
 
 export default defineComponent({
   name: 'App',
@@ -37,8 +32,10 @@ export default defineComponent({
     GlobalHeader
   },
   setup () {
+    const store = useStore()
+    const user = computed(() => store.state.user)
     return {
-      user: currentUser
+      user
     }
   }
 })

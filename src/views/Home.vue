@@ -5,10 +5,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
+import { useStore } from 'vuex'
 
 import ColumnList, { ColumnProps } from '@/components/ColumnList/ColumnList.vue'
-import { testData } from '@/testDate.ts'
+import { GlobalDataProps } from '@/store/store'
 
 export default defineComponent({
   name: 'Home',
@@ -16,8 +17,10 @@ export default defineComponent({
     ColumnList
   },
   setup () {
+    const store = useStore<GlobalDataProps>()
+    const list = computed(() => store.state.columns)
     return {
-      list: testData
+      list
     }
   }
 })

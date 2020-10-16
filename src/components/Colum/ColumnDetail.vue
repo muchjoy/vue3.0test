@@ -14,12 +14,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 
 import PostList from '@/views/PostList.vue'
-
-import { testData, testPosts } from '@/testDate'
 
 export default defineComponent({
   name: 'ColumnDetail',
@@ -27,13 +26,14 @@ export default defineComponent({
     PostList
   },
   setup () {
+    const store = useStore()
     const route = useRoute()
     // 跳转路由传过来的id
     const currentId = +route.params.id
-    // 找出对应id的内容
-    const column = testData.find(c => c.id === currentId)
-    // 找出对应分类列表的数据
-    const list = testPosts.filter(item => item.columnId === currentId)
+    // 找出对应id的内容 使用vuex管理
+    const column = computed(() => store.getters.getColumnById(currentId))
+    // 找出对应分类列表的数据 使用vuex管理
+    const list = computed(() => store.getters.getPostById(currentId))
     return {
       column,
       list

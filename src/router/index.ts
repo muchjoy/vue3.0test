@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '@/store/store'
 
 // 导入组件
 const Home = () => import('@/views/Home.vue')
@@ -21,7 +22,8 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: Login
+    component: Login,
+    meta: { redirectAlreadyLogin: true }
   },
   {
     path: '/column/:id',
@@ -30,14 +32,25 @@ const routes = [
   },
   {
     path: '/create',
-    component: Create
-
+    name: 'create',
+    component: Create,
+    meta: { requiredLogin: true }// 需要登陆
   }
 ]
 
 const router = createRouter({
   history: routerHistory,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiredLogin && !store.state.user.isLogin) { // 验证登陆 如果没有登陆
+    next({ name: 'login' })
+  } else if (to.meta.redirectAlreadyLogin && store.state.user.isLogin) { // 登陆后跳转首页
+    next('/')
+  } else {
+    next()
+  }
 })
 
 export default router
